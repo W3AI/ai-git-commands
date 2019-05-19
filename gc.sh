@@ -1,1 +1,0 @@
-# gc - shortcut git commit

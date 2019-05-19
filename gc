@@ -1,2 +1,2 @@
 # gc - shortcut for git commit command
-sudo git commit -am "added the template command"
+git commit -am "added the template command w/o sudo"

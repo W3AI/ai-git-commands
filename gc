@@ -1,2 +1,6 @@
 # gc - shortcut for git commit command
-git commit -am "added the template command w/o sudo"
+# first arg is the commit -am message
+
+args=("$@")
+
+git commit -am "${args[0]}"

@@ -13,17 +13,17 @@ chmod 755 gc
 
 ## git
 
-ga / git add .
-gc / git commit -am 'comment'
-gl / git log
-gp / git push
-gs / git status
+- ga / git add .
+- gc / git commit -am 'comment'
+- gl / git log
+- gp / git push
+- gs / git status
 
 ## firebase
 
-fd / firebase deploy
+- fd / firebase deploy
 
 ## npm, vue
 
-nrs / npm run serve
-nrb / npm run build
+- nrs / npm run serve
+- nrb / npm run build

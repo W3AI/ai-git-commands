@@ -1,4 +1,4 @@
 # fd - shortcut for firebase deploy
-echo - firebase deploy command: 
+echo firebase deploy
 
 firebase deploy

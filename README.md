@@ -1,4 +1,4 @@
-# git & dev & ops shortcuts
+# git & devops shortcuts
 
 ## git
 

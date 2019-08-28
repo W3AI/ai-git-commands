@@ -1,0 +1,4 @@
+# nrs - shortcut for npm run serve
+echo - npm run serve:
+
+npm run serve

@@ -1,0 +1,4 @@
+# nrs - shortcut for npm run build
+echo - npm run build:
+
+npm run build

@@ -1,4 +1,4 @@
-# gs - shortcut for git status command
+# fd - shortcut for firebase deploy
 echo - firebase deploy command: 
 
 firebase deploy

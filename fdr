@@ -1,0 +1,15 @@
+# Firebase Deploy & Resume
+echo firebase deploy & resume coding
+echo mnemo: Franklin Delano Roosevelt
+
+## nrb - shortcut for npm run build
+echo npm run build
+npm run build
+
+## fd - shortcut for firebase deploy
+echo firebase deploy
+firebase deploy
+
+## nrs - shortcut for npm run serve
+echo npm run serve
+npm run serve

@@ -1,5 +1,8 @@
 # bash git & devops shortcuts
 
+## devops
+- fdr / firebase deploy & resume coding (vue build > deploy > dev)
+
 ## Mac install
 
 copy files to /usr/local/bin

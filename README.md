@@ -1,7 +1,7 @@
-# bash git & devops shortcuts
+# git & devops frequent shortcuts & mnemonics :-)
 
 ## devops
-- fdr / firebase deploy & resume coding (vue build > deploy > dev)
+- fdr / firebase deploy & resume coding (vue build > deploy > dev) / Franklin Delano Roosevelt
 
 ## Mac install
 

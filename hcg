@@ -1,0 +1,9 @@
+# hcg - shortcut for hub create github ai-press/repo for Google Cloud project
+# first arg is org-name/repo-name
+# other optional args -d description, -h url
+# hub create -d Description -h example.com org_name/foo_repo
+
+args=("$@")
+echo hub create ai-press/"${args[0]}" -d "${args[0]}" web app -h https://"${args[0]}".web.app 
+
+hub create ai-press/"${args[0]}" -d '"${args[0]}" web app' -h 'https://"${args[0]}".web.app' 

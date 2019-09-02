@@ -6,4 +6,4 @@
 args=("$@")
 echo hub create ai-press/"${args[0]}" -d "${args[0]}" web app -h https://"${args[0]}".web.app 
 
-hub create ai-press/"${args[0]}" -d '"${args[0]}" web app' -h 'https://"${args[0]}".web.app' 
+hub create ai-press/"${args[0]}" -d "${args[0]}" web app -h https://"${args[0]}".web.app 

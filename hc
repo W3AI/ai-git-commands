@@ -4,5 +4,6 @@
 # hub create -d Description -h example.com org_name/foo_repo
 
 args=("$@")
+echo hub create "${args[0]}"
 
 hub create "${args[0]}" 

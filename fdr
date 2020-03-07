@@ -11,7 +11,7 @@ echo firebase deploy
 firebase deploy
 
 ## nrs - shortcut for npm run dev(nuxt)/serve(vue)
-# echo npm run serve
-# npm run serve
-echo npm run dev
-npm run dev
+echo npm run serve
+npm run serve
+# echo npm run dev
+# npm run dev

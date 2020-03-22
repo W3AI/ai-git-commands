@@ -8,7 +8,8 @@ npm run build
 
 ## fd - shortcut for firebase deploy
 echo firebase deploy
-firebase deploy
+# firebase deploy
+firebase deploy --except functions
 
 ## nrs - shortcut for npm run dev(nuxt)/serve(vue)
 echo npm run serve

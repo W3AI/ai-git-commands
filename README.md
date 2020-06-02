@@ -18,6 +18,7 @@
 
 ## npm, vue
 
+- **ns** / npm start
 - **nrs** / npm run serve
 - **nrb** / npm run build
 

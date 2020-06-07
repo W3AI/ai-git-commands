@@ -1,0 +1,7 @@
+#!/bin/sh
+# dp - shortcut for docker ps
+# list running containers
+
+echo docker ps
+
+docker ps

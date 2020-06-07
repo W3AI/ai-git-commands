@@ -5,6 +5,7 @@
 - **db** / docker build -t < image tag > .
 - **dr** / docker run < image tag or id >
 - **dri** / docker run -it < image tag > < cmd ~sh >
+- **dp** / docker ps - list running containers
 
 ## devops
 

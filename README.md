@@ -2,6 +2,8 @@
 
 ## devops
 
+- **dr** / docker run < image tag or id > .
+
 - **fdr** / firebase deploy & resume coding (vue build > deploy > dev) / Franklin Delano Roosevelt
 
 ## git

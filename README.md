@@ -6,6 +6,7 @@
 - **dr** / docker run < image tag or id >
 - **dri** / docker run -it < image tag > < cmd ~sh >
 - **de** / docker exec -it < cont. id > < cmd ~sh >
+- **dl** / docker logs < cont. id >
 - **dp** / docker ps - list running containers
 
 ## devops

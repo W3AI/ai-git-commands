@@ -1,8 +1,9 @@
+#!/bin/sh
 # dr - shortcut for docker run command
 # first arg is the image id or image tag
 
 args=("$@")
 
-echo docker run "${args[0]}" .
+echo docker run "${args[0]}"
 
-docker run "${args[0]}" .
+docker run "${args[0]}"

@@ -35,5 +35,7 @@ sudo cp * /usr/local/bin
 might need to add permissions eg:
 
 ```bash
-chmod 755 gc
+chmod +x /usr/local/bin/dr
+# or
+chmod 755 /usr/local/bin/dr
 ```

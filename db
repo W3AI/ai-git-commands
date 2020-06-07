@@ -1,0 +1,9 @@
+#!/bin/sh
+# db - shortcut for docker build command
+# first arg is the image tag
+
+args=("$@")
+
+echo docker build -t "${args[0]}" .
+
+docker build -t "${args[0]}" .

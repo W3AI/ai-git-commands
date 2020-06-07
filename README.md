@@ -1,8 +1,11 @@
 # git & devops fasm - frequent shortcuts & mnemonics :-)
 
-## devops
+## docker
 
-- **dr** / docker run < image tag or id > .
+- **db** / docker build -t < image tag > .
+- **dr** / docker run < image tag or id >
+
+## devops
 
 - **fdr** / firebase deploy & resume coding (vue build > deploy > dev) / Franklin Delano Roosevelt
 

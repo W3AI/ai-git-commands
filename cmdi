@@ -1,0 +1,11 @@
+#!/bin/sh
+# command install
+# first arg is the cmd file
+
+args=("$@")
+
+echo sudo cp "${args[0]}" /usr/local/bin
+
+sudo cp "${args[0]}" /usr/local/bin
+sudo chmod +x /usr/local/bin/"${args[0]}"
+

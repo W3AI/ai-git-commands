@@ -4,6 +4,7 @@
 
 - **db** / docker build -t < image tag > .
 - **dr** / docker run < image tag or id >
+- **dri** / docker run -it < image tag > < cmd ~sh >
 
 ## devops
 
@@ -28,6 +29,12 @@
 - **nrb** / npm run build
 
 ## Mac install
+
+- **cmdi** / command install in /usr/local/bin
+
+```bash
+cmdi < cmd >
+```
 
 copy files to /usr/local/bin
 

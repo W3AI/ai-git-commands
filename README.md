@@ -8,6 +8,7 @@
 - **kp** / kubectl get pods
 - **ke** / kubectl exec -it < podName > < cmd ~sh >
 - **kl** / kubectl logs < podName >
+- **kdp** / kubectl delete pod < podName >
 
 ## docker
 

@@ -5,6 +5,8 @@
 ## kubernetes
 
 - **ka** / kubectl apply -f < yaml >
+- **kp** / kubectl get pods
+- **ke** / kubectl exec -it < podName > < cmd ~sh >
 
 ## docker
 

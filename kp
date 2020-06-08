@@ -1,0 +1,6 @@
+#!/bin/sh
+# kp - shortcut for kubectl get pods command
+
+echo kubectl get pods
+
+kubectl get pods

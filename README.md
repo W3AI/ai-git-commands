@@ -11,6 +11,7 @@
 - **kl** / kubectl logs < podName >
 - **kdp** / kubectl delete pod < podName >
 - **kdesp** / kubectl describe pod < podName >
+- **kdesd** / kubectl describe deployment < deplName >
 
 ## docker
 

@@ -6,6 +6,7 @@
 
 - **ka** / kubectl apply -f < yaml >
 - **kp** / kubectl get pods
+- **kd** / alias kd="kubectl get deployments" in ~/.zshrc
 - **ke** / kubectl exec -it < podName > < cmd ~sh >
 - **kl** / kubectl logs < podName >
 - **kdp** / kubectl delete pod < podName >

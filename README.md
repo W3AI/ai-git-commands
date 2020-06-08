@@ -1,5 +1,11 @@
 # git & devops fasm - frequent shortcuts & mnemonics :-)
 
+- **cmdi** / install < cmdFile > in /usr/local/bin
+
+## kubernetes
+
+- **ka** / kubectl apply -f < yaml >
+
 ## docker
 
 - **db** / docker build -t < image tag > .

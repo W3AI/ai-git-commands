@@ -1,0 +1,9 @@
+#!/bin/sh
+# ka - shortcut for kubectl apply command
+# first arg is the yaml file
+
+args=("$@")
+
+echo kubectl apply -f "${args[0]}"
+
+kubectl apply -f "${args[0]}"

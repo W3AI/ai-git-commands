@@ -1,7 +1,9 @@
 #!/bin/sh
-# dp - shortcut for docker ps
-# list running containers
+# dp - shortcut for docker push
+# first arg is the container name/tag
 
-echo docker ps
+args=("$@")
 
-docker ps
+echo docker push "${args[0]}"
+
+docker push "${args[0]}"

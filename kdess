@@ -1,0 +1,9 @@
+#!/bin/sh
+# kdess - shortcut for kubectl describe service podName
+# first arg is the podName
+
+args=("$@")
+
+echo kubectl describe service "${args[0]}" 
+
+kubectl describe service "${args[0]}" 

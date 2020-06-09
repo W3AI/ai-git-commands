@@ -14,6 +14,7 @@
 - **kdd** / kubectl delete deployment < deplName >
 - **kdesp** / kubectl describe pod < podName >
 - **kdesd** / kubectl describe deployment < deplName >
+- **kdess** / kubectl describe service < srvlName >
 - **kr** / kubectl rollout restart deployment < deplName >
 
 ## docker

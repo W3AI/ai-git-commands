@@ -19,7 +19,7 @@
 
 ## docker
 
-- **db** / docker build -t < image tag > .
+- **db** / docker build -t dockerUser/< image tag > .
 - **dr** / docker run < image tag or id >
 - **dri** / docker run -it < image tag > < cmd ~sh >
 - **de** / docker exec -it < cont. id > < cmd ~sh >

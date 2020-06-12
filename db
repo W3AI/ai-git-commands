@@ -1,9 +1,10 @@
 #!/bin/sh
 # db - shortcut for docker build command
 # first arg is the image tag
+# config param: dockerUser: eg: stefian
 
 args=("$@")
 
-echo docker build -t "${args[0]}" .
+echo docker build -t stefian22/"${args[0]}" .
 
-docker build -t "${args[0]}" .
+docker build -t stefian22/"${args[0]}" .

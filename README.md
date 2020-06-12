@@ -24,7 +24,7 @@
 - **dri** / docker run -it < image tag > < cmd ~sh >
 - **de** / docker exec -it < cont. id > < cmd ~sh >
 - **dl** / docker logs < cont. id >
-- **dp** / docker push < cont > to dockerhub
+- **dp** / docker push dockerUser/< image > to dockerhub
 
 ## devops
 

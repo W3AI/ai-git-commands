@@ -1,9 +1,10 @@
 #!/bin/sh
 # dp - shortcut for docker push
 # first arg is the container name/tag
+# config param: dockerUser: eg: stefian
 
 args=("$@")
 
-echo docker push "${args[0]}"
+echo docker push stefian22/"${args[0]}"
 
-docker push "${args[0]}"
+docker push stefian22/"${args[0]}"

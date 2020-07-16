@@ -1,0 +1,17 @@
+#!/bin/sh
+# Most used git command sequence
+# git status > git add . > git status > git commit > git push
+
+echo gs > ga > gs > gc > gp
+
+gs
+
+ga
+
+gs
+
+echo gc \'+ $(pbpaste)\'
+gc \'+ $(pbpaste)\'
+# gc
+
+# gp

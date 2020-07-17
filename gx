@@ -2,6 +2,8 @@
 # gx = Most used git command sequence: gs ga gs gc gp
 # git status > git add . > git status > git commit > git push
 
+tmp=`pbpaste`
+
 echo Most used git cmd sequence: gs ga gs gc gp
 
 gs
@@ -11,6 +13,7 @@ ga
 gs
 
 # echo gc \'+ $(pbpaste) \'
-gc \'+ $(pbpaste) \'
+echo gc \'+ $tmp \'
+gc \'+ $tmp \'
 
 gp

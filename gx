@@ -10,7 +10,7 @@ ga
 
 gs
 
-echo gc \'+ $(pbpaste)\'
-gc \'+ $(pbpaste)\'
+# echo gc \'+ $(pbpaste) \'
+gc \'+ $(pbpaste) \'
 
 gp

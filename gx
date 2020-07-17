@@ -13,7 +13,7 @@ ga
 gs
 
 # echo gc \'+ $(pbpaste) \'
-echo gc \'+ $tmp \'
-gc \'+ $tmp \'
+echo gc \'+$tmp\'
+gc \'+$tmp\'
 
 gp

@@ -12,8 +12,8 @@ ga
 
 gs
 
-# echo gc \'+ $(pbpaste) \'
-echo gc \'+$tmp\'
-gc \'+$tmp\'
+echo git commit -am \'+ $(pbpaste) \'
+
+git commit -am "+ $tmp "
 
 gp

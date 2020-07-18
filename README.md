@@ -32,6 +32,7 @@
 
 ## git
 
+- **gx** / gs > ga > gs > gc(cmd-v) > gp
 - **ga** / git add .
 - **gc** / git commit -am 'comment'
 - **gl** / git log

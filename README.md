@@ -1,5 +1,6 @@
 # git & devops fasm - frequent shortcuts & mnemonics :-)
 
+- **md** / mkdir < dirName >
 - **cmdi** / install < cmdFile > in /usr/local/bin
 
 ## kubernetes

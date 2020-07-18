@@ -1,7 +1,7 @@
 # git & devops fasm - frequent shortcuts & mnemonics :-)
 
-- **md** / make dir < dirName >
-- **mf** / make file < fileName >
+- **md** / make dir < dirName > && cd / .zshrc
+- **mf** / make file < fileName > && code / .zshrc
 - **cmdi** / install < cmdFile > in /usr/local/bin
 
 ## kubernetes

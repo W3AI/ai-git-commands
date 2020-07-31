@@ -10,6 +10,8 @@ zstyle ':vcs_info:*' enable git
 
 alias cl="clear"
 
+alias python="python3"
+
 alias dps="docker ps"
 
 alias k="kubectl"

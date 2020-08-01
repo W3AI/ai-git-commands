@@ -24,7 +24,7 @@ md()
     test -d "$1" || mkdir "$1" && cd "$1"
 }
 
-# make a directory and cd to it
+# make a file and open it in VS Code
 mf()
 {
     touch "$1" && code "$1"

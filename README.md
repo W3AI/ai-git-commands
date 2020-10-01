@@ -7,6 +7,7 @@
 ## sed
 
 - **sed-section** / replace Section with ## Section in txt files
+- **sed-xmin** / replace min & \n strings in txt files - Not Tested !!
 
 ## kubernetes
 

@@ -4,6 +4,10 @@
 - **mf** / make file < fileName > && code / .zshrc
 - **cmdi** / install < cmdFile > in /usr/local/bin
 
+## sed
+
+- **sed-section** / replace Section with ## Section in txt files
+
 ## kubernetes
 
 - **ka** / kubectl apply -f < yaml >

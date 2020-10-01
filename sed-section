@@ -1,0 +1,10 @@
+#!/bin/sh
+# sed-section - cmd to replace Section with ## Section / Udemy courses
+# first arg is the initial file, second arg is the new file
+# eg: sed 's/Section/## Section/g' UX-design-theory.txt > ux-design.txt
+
+args=("$@")
+
+echo sed 's/Section/## Section/g' "${args[0]}" > "${args[1]}"
+
+sed 's/Section/## Section/g' "${args[0]}" > "${args[1]}"

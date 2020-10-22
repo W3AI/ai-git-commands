@@ -40,6 +40,7 @@
 ## git
 
 - **gx** / gs > ga > gs > gc(cmd-v) > gp
+- **gv** / gs > ga > gs > gc(cmd-v)
 - **ga** / git add .
 - **gc** / git commit -am 'comment'
 - **gl** / git log

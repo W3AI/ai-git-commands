@@ -1,0 +1,18 @@
+#!/bin/sh
+# gv = git commit local with msg from clipboard / pbpaste 
+# git status > git add . > git status > git commit 
+
+tmp=`pbpaste`
+
+echo git commit local: gs ga gs gc 
+
+gs
+
+ga
+
+gs
+
+echo git commit -am \'+ $(pbpaste) \'
+
+git commit -am "+ $tmp "
+

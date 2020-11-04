@@ -5,6 +5,7 @@
 tmp=`pbpaste`
 
 echo git commit local: gs ga gs gc 
+echo ---
 
 gs
 
@@ -16,3 +17,5 @@ echo git commit -am \'+ $(pbpaste) \'
 
 git commit -am "+ $tmp "
 
+echo commited to repo
+echo ---

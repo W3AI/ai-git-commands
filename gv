@@ -1,8 +1,9 @@
 #!/bin/sh
-# gv = git commit local with msg from clipboard / pbpaste 
+# gv = git commit local with msg from clipboard / pbpaste + UTC
 # git status > git add . > git status > git commit 
 
 tmp=`pbpaste`
+utc=`date +%s`
 
 echo git commit local: gs ga gs gc 
 echo ---
@@ -13,9 +14,9 @@ ga
 
 gs
 
-echo git commit -am \'+ $(pbpaste) \'
+echo git commit -am \'$(date +%s) + $(pbpaste) \'
 
-git commit -am "+ $tmp "
+git commit -am "$utc + $tmp "
 
 echo commited to repo
 echo ---

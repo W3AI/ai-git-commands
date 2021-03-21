@@ -1,6 +1,6 @@
 #!/bin/sh
 # gv = git commit local with msg from clipboard / pbpaste + UTC
-# git status > git add . > git status > git commit 
+# git status > git add . > git status > git commit + UTC
 
 tmp=`pbpaste`
 utc=`date +%s`

@@ -14,9 +14,9 @@ ga
 
 gs
 
-echo git commit -am \'$(gdate +%s%3N) + $(pbpaste) \'
+echo git commit -am \'@$(gdate +%s%3N)ms + $(pbpaste) \'
 
-git commit -am "$utc + $tmp "
+git commit -am "@$utcms + $tmp "
 
 echo commited to repo
 echo ---

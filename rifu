@@ -1,0 +1,20 @@
+#!/bin/sh
+# Batch cmd to Replace in files Udemy course content
+
+### Add new lines and ## to Section titles
+replace-in-files --regex='\nSection' --replacement='\n\n\n## Section' course.txt
+
+### Put lecture duration in mins on the lecture line
+replace-in-files --regex='\n(\d+)min\n' --replacement=' $1min' course.txt
+
+### Put Section duration on the Section line
+replace-in-files --regex='\n0 /' --replacement=' 0 /' course.txt
+
+### Remove blank lines between Section and lectures lines
+replace-in-files --regex='min\n\n(\d+)' --replacement='min\n$1' course.txt
+
+### Removes new lines from titles
+replace-in-files --regex='(\w+)\n(\D)' --replacement='$1 $2' course.txt
+
+### Adds new line before Section titles
+replace-in-files --regex='##' --replacement='\n## Section' course.txt

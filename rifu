@@ -1,5 +1,7 @@
 #!/bin/sh
 # Batch cmd to Replace in files Udemy course content
+# Usage in folder where Udemy course content is copied as course.txt
+# $ rifu
 
 ### Add new lines and ## to Section titles
 replace-in-files --regex='\nSection' --replacement='\n\n\n## Section' course.txt

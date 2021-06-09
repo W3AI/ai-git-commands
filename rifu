@@ -19,4 +19,4 @@ replace-in-files --regex='min\n\n(\d+)' --replacement='min\n$1' course.txt
 replace-in-files --regex='(\w+)\n(\D)' --replacement='$1 $2' course.txt
 
 ### Adds new line before Section titles
-replace-in-files --regex='##' --replacement='\n## Section' course.txt
+replace-in-files --regex='##' --replacement='\n##' course.txt

@@ -3,7 +3,8 @@
 - **md** / make dir < dirName > && cd / .zshrc
 - **mf** / make file < fileName > && code / .zshrc
 - **cmdi** / install < cmdFile > in /usr/local/bin
-- **rifu** / Formats Udemy course.txt for Agile sheet template
+- **rifu** / Formats Udemy course.txt for Smart sheet template
+- **rifa** / Formats ACG course.txt for Smart sheet template
 
 ## sed
 

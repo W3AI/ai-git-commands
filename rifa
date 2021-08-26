@@ -1,0 +1,26 @@
+#!/bin/sh
+# Batch cmd to Replace in Files (rif) A Cloud Guru course content
+# Usage in folder where ACG course content is copied as course.txt
+# $ rifa
+
+### Add new lines and ## to Chapter/Section titles
+replace-in-files --regex='\nCHAPTER (\d+)\n' --replacement='\n\n## Chapter $1: ' course.txt
+
+### Put lecture duration in mins:sec on the Lecture/Chapter line
+replace-in-files --regex='\n(\d+):(\d+)\n' --replacement=' $1:$2\n' course.txt
+
+### Put Section duration in h:mins:sec on the Lecture/Chapter line
+replace-in-files --regex='\n(\d+):(\d+):(\d+)\n' --replacement=' $1:$2:$3\n' course.txt
+
+### Put LAB & title on the same line 
+replace-in-files --regex='\nHANDS-ON LAB\n' --replacement='\nLAB: ' course.txt
+
+
+### Remove blank lines between Section and lectures lines
+### replace-in-files --regex='min\n\n(\d+)' --replacement='min\n$1' course.txt
+
+### Removes new lines from titles
+### replace-in-files --regex='(\w+)\n(\D)' --replacement='$1 $2' course.txt
+
+### Adds new line before Section titles
+### replace-in-files --regex='##' --replacement='\n##' course.txt

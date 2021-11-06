@@ -4,7 +4,7 @@
 # $ rifu
 
 ### Add new lines and ## to Section titles
-replace-in-files --regex='\nSection' --replacement='\n\n## Section' course.txt
+replace-in-files --regex='\nSection' --replacement='\n## Section' course.txt
 
 ### Put lecture duration in mins on the lecture line
 replace-in-files --regex='\n(\d+)min\n' --replacement=' $1min\n' course.txt

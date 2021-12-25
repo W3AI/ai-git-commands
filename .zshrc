@@ -14,6 +14,8 @@ alias python="python3"
 
 alias dps="docker ps"
 
+alias dra="deno run --allow-all"
+
 alias k="kubectl"
 alias kd="kubectl get deployments"
 alias ks="kubectl get services"

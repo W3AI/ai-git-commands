@@ -8,15 +8,13 @@ RPROMPT=\$vcs_info_msg_0_
 zstyle ':vcs_info:git:*' formats '%F{240}(%b)%r%f'
 zstyle ':vcs_info:*' enable git
 
+alias ls="lsd"
+alias n="/opt/homebrew/bin/nano"
 alias cl="clear"
-
 alias python="python3"
 alias p3="python3"
-
 alias dps="docker ps"
-
 alias dra="deno run --allow-all"
-
 alias k="kubectl"
 alias kd="kubectl get deployments"
 alias ks="kubectl get services"

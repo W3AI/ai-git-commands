@@ -21,6 +21,11 @@ alias k="kubectl"
 alias kd="kubectl get deployments"
 alias ks="kubectl get services"
 
+# append Python/pip3 libs etc including redisgraph-bulk-insert/update
+path+=('/Users/stefan/Library/Python/3.9/bin')
+# export to sub-processes (make it inherited by child processes)
+export PATH
+
 # make a directory and cd to it
 md()
 {

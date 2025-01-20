@@ -1,3 +1,4 @@
+#!/bin/zsh
 PROMPT='%B%F{33}SI%f %* %(?.%F{green}$.%F{red}$ %?)%f %B%F{240}%1~%f%b %# '
 
 autoload -Uz vcs_info
@@ -8,9 +9,24 @@ RPROMPT=\$vcs_info_msg_0_
 zstyle ':vcs_info:git:*' formats '%F{240}(%b)%r%f'
 zstyle ':vcs_info:*' enable git
 
+alias o.="open ."
+alias c.="code ."
+alias nrd="npm run dev"
+alias nrb="npm run build"
+alias ni="npm install"
+alias fd="firebase deploy"
+alias lv="/Users/stefan/.local/bin/lvim"
+alias cz="code ~/workspace/aiteams/zsh/.zshrc"
 alias ls="lsd"
+alias la="ls -la"
 alias n="/opt/homebrew/bin/nano"
+alias nz="n ~/.zshrc"
+alias sz="source ~/.zshrc"
+alias uz="cp .zshrc ~/.zshrc && source ~/.zshrc && gv && echo 'zshrc updated, sourced, & commited locally'"
 alias cl="clear"
+alias cr="clear && cargo run"
+alias cw="cd workspace"
+alias tl="tree -L 1"
 alias python="python3"
 alias p3="python3"
 alias dps="docker ps"
@@ -19,25 +35,80 @@ alias k="kubectl"
 alias kd="kubectl get deployments"
 alias ks="kubectl get services"
 
-# append Python/pip3 libs etc including redisgraph-bulk-insert/update
+# append Python/pip3, etc libs etc including redisgraph-bulk-insert/update
 path+=('/Users/stefan/Library/Python/3.9/bin')
-# export to sub-processes (make it inherited by child processes)
-export PATH
 
-# make a directory and cd to it
+# export to sub-processes (make it inherited by child processes)
+export PATH="$HOME/.local/bin":$PATH
+export GDAL_LIBRARY_PATH=/opt/homebrew/lib/libgdal.dylib
+export GEOS_LIBRARY_PATH=/opt/homebrew/lib/libgeos_c.dylib
+
+# clear and re-run last cmd - Not working yet
+re()
+{
+    clear && ${history[@][1]}
+}
+
+# md: make a directory and cd into it
 md()
 {
     test -d "$1" || mkdir "$1" && cd "$1"
 }
 
-# make a file and open it in VS Code
+# rd: remove dir and files inside
+rd()
+{
+    rm -rf "$1"
+}
+
+# mf: make a file and open it in VS Code
 mf()
 {
     touch "$1" && code "$1"
 }
 
+# cf: find dir and cd into it
+cf()
+{
+    echo 'cf = cd to find(dir)' && cd `find ~/workspace -type d -name "$1" | grep -wv node_modules` && pwd
+}
+
 # The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/stefanianta/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/stefanianta/google-cloud-sdk/path.zsh.inc'; fi
+if [ -f '/Users/stefanianta/google-cloud-sdk/path.zsh.inc' ]; then .
+'/Users/stefanianta/google-cloud-sdk/path.zsh.inc'; fi
 
 # The next line enables shell command completion for gcloud.
-if [ -f '/Users/stefanianta/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/stefanianta/google-cloud-sdk/completion.zsh.inc'; fi
+if [ -f '/Users/stefanianta/google-cloud-sdk/completion.zsh.inc' ]; then .
+'/Users/stefanianta/google-cloud-sdk/completion.zsh.inc'; fi
+
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/stefan/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/stefan/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/stefan/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/stefan/google-cloud-sdk/completion.zsh.inc'; fi
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/Users/stefan/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/Users/stefan/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/Users/stefan/miniconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/Users/stefan/miniconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+conda deactivate
+
+# Pyenv initialization
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init - zsh)"

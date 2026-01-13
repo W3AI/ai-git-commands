@@ -13,6 +13,7 @@ alias o.="open ."
 alias c.="code ."
 alias nrs="npm run start"
 alias hsd="hugo server --disableFastRender"
+alias za="grep -E '^\s*alias\b' ~/.zshrc | sort | cat -n"   # list all aliases with line numbers
 alias nrd="npm run dev"
 alias nrb="npm run build"
 alias ni="npm install"

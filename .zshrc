@@ -11,6 +11,8 @@ zstyle ':vcs_info:*' enable git
 
 alias o.="open ."
 alias c.="code ."
+alias nrs="npm run start"
+alias hsd="hugo server --disableFastRender"
 alias nrd="npm run dev"
 alias nrb="npm run build"
 alias ni="npm install"

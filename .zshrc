@@ -14,6 +14,7 @@ alias c.="code ."
 alias nrs="npm run start"
 alias hsd="hugo server --disableFastRender"
 alias za="grep -E '^\s*alias\b' ~/.zshrc | sort | cat -n"   # list all aliases with line numbers
+alias tt88="ttyd -p 7688 -W zsh "   # run tty server with zsh on http://localhost:7688 
 alias nrd="npm run dev"
 alias nrb="npm run build"
 alias ni="npm install"

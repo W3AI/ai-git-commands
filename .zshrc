@@ -20,8 +20,8 @@ alias nrb="npm run build"
 alias ni="npm install"
 alias fd="firebase deploy"
 alias fv="fv.sh"            # File Viewer/browser on split panel
-alias green="echo -e '\e]11;#002222\a'"  # set terminal bg to dark green
-alias blue="echo -e '\e]11;#001122\a'"  # set terminal bg to dark blue
+alias green="echo -e '\e]11;#044\a'"  # set terminal bg to dark green
+alias blue="echo -e '\e]11;#036\a'"  # set terminal bg to dark blue
 alias grey="echo -e '\e]11;#181818\a'"  # set terminal bg to dark grey
 alias lv="/Users/stefan/.local/bin/lvim"
 alias cz="code ~/workspace/aiteams/zsh/.zshrc"
@@ -44,6 +44,8 @@ alias dra="deno run --allow-all"
 alias k="kubectl"
 alias kd="kubectl get deployments"
 alias ks="kubectl get services"
+alias tls="termshot --show-cmd -- gls --group-directories-first -la --color=always"
+alias yz="yazi" 
 
 # append Python/pip3, etc libs etc including redisgraph-bulk-insert/update
 path+=('/Users/stefan/Library/Python/3.9/bin')

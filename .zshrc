@@ -11,6 +11,7 @@ zstyle ':vcs_info:*' enable git
 
 alias o.="open ."
 alias c.="code ."
+alias nb="open -a 'Brave Browser' -n --args --new-window"     # start new brave browser window
 alias nrs="npm run start"
 alias hsd="hugo server --disableFastRender"
 alias za="grep -E '^\s*alias\b' ~/.zshrc | sort | cat -n"   # list all aliases with line numbers

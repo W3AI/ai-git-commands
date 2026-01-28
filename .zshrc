@@ -47,6 +47,9 @@ alias kd="kubectl get deployments"
 alias ks="kubectl get services"
 alias tls="termshot --show-cmd -- gls --group-directories-first -la --color=always"
 alias yz="yazi" 
+alias spf="spf" # lauch superfile terminal file manager
+alias nt="open . -a iTerm" # new terminal window in current dir
+alias x="exit"  # exit terminal
 
 # append Python/pip3, etc libs etc including redisgraph-bulk-insert/update
 path+=('/Users/stefan/Library/Python/3.9/bin')

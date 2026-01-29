@@ -50,6 +50,7 @@ alias yz="yazi"
 alias spf="spf" # lauch superfile terminal file manager
 alias nt="open . -a iTerm" # new terminal window in current dir
 alias x="exit"  # exit terminal
+alias m="tmux"
 
 # append Python/pip3, etc libs etc including redisgraph-bulk-insert/update
 path+=('/Users/stefan/Library/Python/3.9/bin')

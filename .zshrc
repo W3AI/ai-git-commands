@@ -51,6 +51,7 @@ alias spf="spf" # lauch superfile terminal file manager
 alias nt="open . -a iTerm" # new terminal window in current dir
 alias x="exit"  # exit terminal
 alias m="tmux"  # set -g mouse on \n set-option -g default-shell /bin/zsh
+alias svim="~/.config/nvim/si-nvim-startup"  # launch si nvim multipanel layout
 
 # append Python/pip3, etc libs etc including redisgraph-bulk-insert/update
 path+=('/Users/stefan/Library/Python/3.9/bin')

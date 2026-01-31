@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+# SI Nvim multipanel startup script
+# nvim multipanel startup script that opens nvim with 
+# a nvim-tree leftbar integrated file explorer, 
+# 2 centered nvim editors with full mouse support, 
+# right sidebar for ollama ai chat integration
+# and 2 bottom terminal panels.
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+NVIM_BIN="/opt/homebrew/bin/nvim"
+CONFIG_DIR="$HOME/.config/nvim"
+
+# Ensure nvim config directory exists
+mkdir -p "$CONFIG_DIR"
+
+# Copy configuration files if they don't exist or update them
+echo "Setting up Neovim configuration..."
+cp "$SCRIPT_DIR/nvim-init.lua" "$CONFIG_DIR/init.lua"
+cp "$SCRIPT_DIR/nvim-multipanel.lua" "$CONFIG_DIR/lua/multipanel.lua" 2>/dev/null || {
+  mkdir -p "$CONFIG_DIR/lua"
+  cp "$SCRIPT_DIR/nvim-multipanel.lua" "$CONFIG_DIR/lua/multipanel.lua"
+}
+
+# Check if ollama is running, start it if not
+if ! pgrep -x "ollama" > /dev/null; then
+  echo "Starting Ollama service..."
+  ollama serve > /dev/null 2>&1 &
+  sleep 2
+fi
+
+# Check if ollama has the required model
+if ! ollama list | grep -q "llama2"; then
+  echo "Downloading llama2 model for Ollama (this may take a while on first run)..."
+  echo "You can change the model in the config later if needed."
+  ollama pull llama2 &
+fi
+
+# Add multipanel require to init.lua if not already present
+if ! grep -q "require.*multipanel" "$CONFIG_DIR/init.lua"; then
+  echo "" >> "$CONFIG_DIR/init.lua"
+  echo "-- Load multipanel layout" >> "$CONFIG_DIR/init.lua"
+  echo "require('multipanel')" >> "$CONFIG_DIR/init.lua"
+fi
+
+echo "Launching Neovim with multipanel layout..."
+echo ""
+echo "Key Mappings:"
+echo "  <Space>e      - Toggle file explorer"
+echo "  <Space>f      - Focus file explorer"
+echo "  <Space>t      - Toggle terminal"
+echo "  <Space>g      - Gen AI prompt"
+echo "  <Space>gc     - Gen AI chat"
+echo "  <Ctrl-h/j/k/l> - Navigate windows"
+echo "  <Tab>/<S-Tab> - Next/Previous buffer"
+echo ""
+
+# Launch nvim
+$NVIM_BIN "$@"

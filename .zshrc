@@ -11,6 +11,7 @@ zstyle ':vcs_info:*' enable git
 
 alias o.="open ."
 alias c.="code ."
+alias gp2="/Users/stefan/workspace/git-cmds/gp2.sh"   # push to both GitHub and GitLab safely with merge-first strategy to avoid rebase ping-pong
 alias nb="open -a 'Brave Browser' -n --args --new-window"     # start new brave browser window
 alias nrs="npm run start"
 alias hsd="hugo server --disableFastRender"

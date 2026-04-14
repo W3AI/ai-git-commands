@@ -53,6 +53,8 @@ alias nt="open . -a iTerm" # new terminal window in current dir
 alias x="exit"  # exit terminal
 alias m="tmux"  # set -g mouse on \n set-option -g default-shell /bin/zsh
 alias svim="~/.config/nvim/si-nvim-startup"  # launch si nvim multipanel layout
+alias d4s="dev4 start"   # dev4 convenience aliases: start and stop the dev4 session with 4 tmux panes
+alias d4q="dev4 stop"
 
 # append Python/pip3, etc libs etc including redisgraph-bulk-insert/update
 path+=('/Users/stefan/Library/Python/3.9/bin')

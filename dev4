@@ -1,0 +1,395 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# dev4 - create a 4-column tmux session, persist dirs and last-10 commands per pane
+# Usage: dev4 [start|save|stop|status|help]
+
+BASE="$HOME/.dev4"
+
+# remember the folder where dev4 was invoked; used for dev4.log and to namespace session state
+INV_PWD="$PWD"
+
+# create a session name unique to the invocation folder so different folders get isolated sessions
+SESSION_PREFIX="dev4"
+session_hash=$(printf "%s" "$INV_PWD" | shasum -a 1 2>/dev/null | awk '{print $1}' | cut -c1-8 2>/dev/null || true)
+if [ -z "$session_hash" ]; then
+  # fallback for macOS without shasum
+  if command -v md5 >/dev/null 2>&1; then
+    session_hash=$(printf "%s" "$INV_PWD" | md5 | awk '{print $NF}' | cut -c1-8)
+  else
+    session_hash="local"
+  fi
+fi
+SESSION_NAME="${SESSION_PREFIX}-${session_hash}"
+
+# per-session state files (isolate sessions started from different folders)
+DIRS_FILE="$BASE/${SESSION_NAME}_dirs"
+LAST_CMDS_FILE="$BASE/${SESSION_NAME}_last_cmds.json"
+
+mkdir -p "$BASE"
+
+usage() {
+  cat <<EOF
+dev4 - manage 4-column tmux development session
+
+Commands:
+  start   Create (or attach) a tmux session with 4 vertical columns
+  save    Save current panes' cwd and last-10 commands into $BASE
+  stop    Kill the tmux session
+  status  Show session and stored data
+  help    Show this message
+  tmux kill-session -t dev4  # manually kill session if needed
+
+Notes:
+  - Requires tmux and zsh (the script starts zsh shells with per-pane HISTFILE)
+  - Persistent state is stored under $BASE
+EOF
+}
+
+
+# Open a new iTerm2 window and attach to the session. Falls back to local tmux attach.
+open_iterm_and_attach() {
+  if command -v osascript >/dev/null 2>&1; then
+    tmpfile=$(mktemp /tmp/dev4_applescript.XXXXXX)
+    # Only use iTerm2 (explicit requirement)
+    appname="iTerm2"
+    cat > "$tmpfile" <<APPLESCRIPT
+tell application "${appname}"
+  activate
+  try
+    set newWindow to (create window with default profile)
+  on error
+    create window with default profile
+    set newWindow to current window
+  end try
+  -- Avoid querying screen bounds (may be blocked by macOS privacy settings).
+  -- Simply create a new window and attach; sizing/centering requires additional permissions.
+  delay 0.1
+  -- Hardcode terminal dimensions for 1080p: columns=240, rows=67.
+  -- On a 4k screen this will be half-size; on 1080p it will fill the screen.
+  tell current session of newWindow
+    try
+      set columns to 240
+      set rows to 67
+    end try
+    write text "tmux attach -t ${SESSION_NAME} || tmux attach -t ${SESSION_NAME}"
+    try
+      set name to "${SESSION_NAME}"
+    end try
+  end tell
+end tell
+APPLESCRIPT
+    out=$(mktemp /tmp/dev4_osascript_out.XXXXXX)
+    if osascript "$tmpfile" >"$out" 2>&1; then
+      rm -f "$tmpfile" "$out"
+      return 0
+    else
+      # try to launch iTerm2 and retry once
+      open -a "$appname" >/dev/null 2>&1 || true
+      sleep 0.2
+      if osascript "$tmpfile" >"$out" 2>&1; then
+        rm -f "$tmpfile" "$out"
+        return 0
+      fi
+    fi
+
+    # Failed to open iTerm2 — report osascript output for debugging, do NOT attach locally
+    echo "Failed to open iTerm2 via AppleScript. Session created but NOT attached." >&2
+    echo "---- osascript output ----" >&2
+    sed -n '1,200p' "$out" >&2 || true
+    echo "---- end osascript output ----" >&2
+    rm -f "$tmpfile" "$out"
+    return 1
+  else
+    echo "osascript not found — session created but not attached (osascript missing)" >&2
+    return 1
+  fi
+}
+
+read_dirs() {
+  local -a d
+  if [ -f "$DIRS_FILE" ]; then
+    d=()
+    while IFS= read -r line; do
+      d+=("$line")
+    done < "$DIRS_FILE"
+  fi
+  # ensure 4 entries
+  for i in 0 1 2 3; do
+    if [ -z "${d[i]:-}" ]; then
+      d[i]="$PWD"
+    fi
+  done
+  echo "${d[@]}"
+}
+
+start_session() {
+  if ! command -v tmux >/dev/null 2>&1; then
+    echo "tmux not found. Install tmux and try again." >&2
+    exit 2
+  fi
+
+  # determine dirs: prefer explicit saved dirs; if missing try parsing last_cmds.json
+  if [ -f "$DIRS_FILE" ]; then
+    read -r dir0 dir1 dir2 dir3 <<< "$(read_dirs)"
+  elif [ -f "$LAST_CMDS_FILE" ]; then
+    # parse the "dirs" array from JSON-ish file
+    parsed_dirs=()
+    while IFS= read -r line; do
+      parsed_dirs+=("$line")
+    done < <(sed -n '/"dirs"[[:space:]]*:/, /\]/p' "$LAST_CMDS_FILE" | tr -d '\n' | sed 's/.*\[//;s/\].*//;s/",/"\n/g' | sed 's/[\" ,]//g')
+    for i in 0 1 2 3; do
+      eval "dir$i=\"${parsed_dirs[i]:-$PWD}\""
+    done
+  else
+    read -r dir0 dir1 dir2 dir3 <<< "$(read_dirs)"
+  fi
+
+  # create detached session with pane0
+  if tmux has-session -t "$SESSION_NAME" 2>/dev/null; then
+    echo "Session '$SESSION_NAME' already exists — opening in iTerm2." 
+    if ! open_iterm_and_attach; then
+      echo "Created session exists but failed to open iTerm2; not attaching locally." >&2
+    fi
+    return
+  fi
+
+  tmux new-session -d -s "$SESSION_NAME" -c "$dir0" "HISTFILE=$BASE/${SESSION_NAME}_hist_0 zsh -i"
+  tmux split-window -h -t "$SESSION_NAME" -c "$dir1" "HISTFILE=$BASE/${SESSION_NAME}_hist_1 zsh -i"
+  tmux select-pane -t 0
+  tmux split-window -h -t "$SESSION_NAME" -c "$dir2" "HISTFILE=$BASE/${SESSION_NAME}_hist_2 zsh -i"
+  tmux select-pane -t 0
+  tmux split-window -h -t "$SESSION_NAME" -c "$dir3" "HISTFILE=$BASE/${SESSION_NAME}_hist_3 zsh -i"
+
+  # arrange evenly into 4 vertical columns
+  tmux select-layout -t "$SESSION_NAME" even-horizontal >/dev/null 2>&1 || true
+
+  # enable sensible zsh history options inside each pane (best-effort)
+  for i in 0 1 2 3; do
+    # send a command to enable incremental append to history and larger save size
+    tmux send-keys -t "$SESSION_NAME":0.$i "export HISTFILE=$BASE/${SESSION_NAME}_hist_$i; export SAVEHIST=10000; export HISTSIZE=10000; setopt INC_APPEND_HISTORY SHARE_HISTORY" C-m
+    tmux send-keys -t "$SESSION_NAME":0.$i "clear" C-m
+  done
+
+  # Ensure panes are ordered left-to-right as 0..3. tmux can assign indices unpredictably,
+  # so detect each pane's left position and swap panes into the correct indices.
+  # Build an array of pane_id sorted by their left coordinate.
+  mapfile_sorted_panes=()
+  while IFS= read -r line; do
+    # line format: <pane_id> <pane_index> <pane_left>
+    pid=$(awk '{print $1}' <<< "$line")
+    left=$(awk '{print $3}' <<< "$line")
+    printf '%s %s\n' "$left" "$pid"
+  done < <(tmux list-panes -t "$SESSION_NAME" -F "#{pane_id} #{pane_index} #{pane_left}") | sort -n | while read -r _ pid; do
+    mapfile_sorted_panes+=("$pid")
+  done
+
+  # Swap sorted panes into target indices 0..3
+  for i in 0 1 2 3; do
+    target_index=$i
+    desired_pid=${mapfile_sorted_panes[i]:-}
+    if [ -z "$desired_pid" ]; then
+      continue
+    fi
+    # find current pid at target_index
+    current_pid=$(tmux list-panes -t "$SESSION_NAME" -F "#{pane_index} #{pane_id}" | awk -v idx="$target_index" '$1==idx{print $2}')
+    if [ "$current_pid" != "$desired_pid" ]; then
+      tmux swap-pane -s "$desired_pid" -t "$SESSION_NAME":0.$target_index
+    fi
+  done
+
+  # After ordering, ensure each pane uses the correct history file and starts in saved dir
+  for i in 0 1 2 3; do
+    # send cd and export HISTFILE for the pane index i
+    eval target_dir=
+    # attempt to use dir variables defined earlier
+    case $i in
+      0) target_dir="$dir0" ;;
+      1) target_dir="$dir1" ;;
+      2) target_dir="$dir2" ;;
+      3) target_dir="$dir3" ;;
+    esac
+    tmux send-keys -t "$SESSION_NAME":0.$i "cd \"$target_dir\"" C-m
+    tmux send-keys -t "$SESSION_NAME":0.$i "export HISTFILE=$BASE/${SESSION_NAME}_hist_$i" C-m
+    tmux send-keys -t "$SESSION_NAME":0.$i "clear" C-m
+  done
+
+  # write a run log in the invocation folder before attaching
+  write_run_log || true
+
+  # open a new iTerm2 window and attach there (fallback to local attach)
+  if ! open_iterm_and_attach; then
+    echo "Session '$SESSION_NAME' created but failed to open iTerm2; not attaching locally." >&2
+    return 1
+  fi
+}
+
+save_session() {
+  if ! tmux has-session -t "$SESSION_NAME" 2>/dev/null; then
+    echo "No running '$SESSION_NAME' session found." >&2
+    return 1
+  fi
+
+  declare -a panes
+  while IFS= read -r line; do
+    panes+=("$line")
+  done < <(tmux list-panes -t "$SESSION_NAME" -F "#{pane_index} #{pane_current_path}")
+
+  # write dirs file (0..3)
+  : > "$DIRS_FILE"
+  for i in 0 1 2 3; do
+    # find line starting with index
+    path=""
+    for p in "${panes[@]}"; do
+      idx=${p%% *}
+      rest=${p#* }
+      if [ "$idx" = "$i" ]; then path="$rest"; break; fi
+    done
+    if [ -z "$path" ]; then path="$PWD"; fi
+    echo "$path" >> "$DIRS_FILE"
+  done
+
+  # collect last 10 commands per pane from HISTFILE
+  printf '{\n  "dirs": [' > "$LAST_CMDS_FILE"
+  # dirs
+  saved_dirs=()
+  while IFS= read -r line; do
+    saved_dirs+=("$line")
+  done < "$DIRS_FILE"
+  for i in 0 1 2 3; do
+    printf '"%s"' "${saved_dirs[i]}" >> "$LAST_CMDS_FILE"
+    if [ "$i" -lt 3 ]; then printf ', ' >> "$LAST_CMDS_FILE"; fi
+  done
+  printf '],\n  "last_cmds": [' >> "$LAST_CMDS_FILE"
+
+  for i in 0 1 2 3; do
+    histfile="$BASE/${SESSION_NAME}_hist_$i"
+    printf '\n    [' >> "$LAST_CMDS_FILE"
+    if [ -f "$histfile" ]; then
+      cmds=()
+      while IFS= read -r line; do
+        cmds+=("$line")
+      done < <(awk 'NF' "$histfile" | tail -n 100 | tail -n 10)
+    else
+      cmds=()
+    fi
+    for j in "${!cmds[@]}"; do
+      c=${cmds[j]//\"/\\\"}
+      printf '"%s"' "$c" >> "$LAST_CMDS_FILE"
+      if [ "$j" -lt $((${#cmds[@]}-1)) ]; then printf ', ' >> "$LAST_CMDS_FILE"; fi
+    done
+    printf ' ]' >> "$LAST_CMDS_FILE"
+    if [ "$i" -lt 3 ]; then printf ',' >> "$LAST_CMDS_FILE"; fi
+  done
+  printf '\n  ]\n}\n' >> "$LAST_CMDS_FILE"
+
+    # also write a dev4.log in the invocation folder summarizing run state
+    write_run_log || true
+
+  echo "Saved dirs -> $DIRS_FILE and last commands -> $LAST_CMDS_FILE"
+}
+
+stop_session() {
+  if tmux has-session -t "$SESSION_NAME" 2>/dev/null; then
+    # best-effort save before killing
+    save_session || true
+    tmux kill-session -t "$SESSION_NAME"
+    echo "Killed session $SESSION_NAME"
+    # attempt to close the iTerm window that hosts this session (best-effort)
+    if command -v osascript >/dev/null 2>&1; then
+      osascript <<APPLESCRIPT 2>/dev/null || true
+        tell application "iTerm2"
+          repeat with w in windows
+            try
+              set sname to name of current session of w
+              if sname is "${SESSION_NAME}" or sname is "${SESSION_NAME}" then
+                close w
+              end if
+            end try
+          end repeat
+        end tell
+APPLESCRIPT
+    fi
+  else
+    echo "No session $SESSION_NAME running."
+  fi
+}
+
+status() {
+  if tmux has-session -t "$SESSION_NAME" 2>/dev/null; then
+    echo "Session '$SESSION_NAME' is running. Panes:"
+    tmux list-panes -t "$SESSION_NAME" -F "#P: #{pane_current_path}"
+  else
+    echo "Session '$SESSION_NAME' not running."
+  fi
+  echo
+  echo "Stored dirs (if any):"
+  [ -f "$DIRS_FILE" ] && nl -ba "$DIRS_FILE" || echo "  (no saved dirs)"
+  echo
+  echo "Last commands file: $LAST_CMDS_FILE"
+}
+
+
+write_run_log() {
+  local log="$INV_PWD/dev4.log"
+  {
+    echo "# dev4 - opens 4 tmux terminals in current folder or previous session folders and keeps the 4 history lists for the terminals."
+    echo "# dev4 commands:"
+    echo "# dev4 start    # start dev4"
+    echo "# dev4 save     # save state"
+    echo "# dev4 stop     # close dev4"
+    echo
+    echo "Invocation folder: $INV_PWD"
+    echo
+    # list dirs
+    echo "Saved dirs:" 
+    if [ -f "$DIRS_FILE" ]; then
+      nl -ba "$DIRS_FILE"
+    else
+      echo "  (no saved dirs)"
+    fi
+    echo
+    # last commands per terminal
+    echo "Last commands per terminal (from $LAST_CMDS_FILE or hist files):"
+    for i in 0 1 2 3; do
+      echo
+      echo "Terminal $((i+1)) Command History"
+      histfile="$BASE/${SESSION_NAME}_hist_$i"
+      if [ -f "$histfile" ]; then
+        # show last 10 meaningful lines
+        awk 'NF' "$histfile" | tail -n 10 | nl -ba -v1 -w3 -s'. '
+      else
+        # try to read from last_cmds.json
+        if [ -f "$LAST_CMDS_FILE" ]; then
+          sed -n "/\"last_cmds\"/,/\]/p" "$LAST_CMDS_FILE" | sed -n "/\[/{:a;n;/\]/q;p;ba;}" | sed -n "$(($i+1))p" | sed 's/\[//;s/\]//;s/",/\n/g;s/\"//g' | nl -ba -v1 -w3 -s'. '
+        else
+          echo "  (no history)"
+        fi
+      fi
+    done
+  } > "$log"
+  echo "Wrote run log: $log"
+}
+
+case "${1:-start}" in
+  start)
+    start_session
+    ;;
+  save)
+    save_session
+    ;;
+  stop)
+    stop_session
+    ;;
+  status)
+    status
+    ;;
+  help|-h|--help)
+    usage
+    ;;
+  *)
+    echo "Unknown command: $1" >&2
+    usage
+    exit 2
+    ;;
+esac

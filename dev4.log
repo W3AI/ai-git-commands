@@ -1,0 +1,63 @@
+# dev4 - opens 4 tmux terminals in current folder or previous session folders and keeps the 4 history lists for the terminals.
+# dev4 commands:
+# dev4 start    # start dev4
+# dev4 save     # save state
+# dev4 stop     # close dev4
+
+Invocation folder: /Users/stefan/workspace/git-cmds
+
+Saved dirs:
+     1	/Users/stefan/workspace/git-cmds
+     2	/Users/stefan/workspace/git-cmds
+     3	/Users/stefan/workspace/iantalabs/3aidesk/site
+     4	/Users/stefan/workspace/iantalabs/3aidesk/editor-server
+
+Last commands per terminal (from /Users/stefan/.dev4/dev4-0d0dd903_last_cmds.json or hist files):
+
+Terminal 1 Command History
+  1. : 1776192373:0;export HISTFILE=/Users/stefan/.dev4/dev4-0d0dd903_hist_0; export SAVEHIST=10000; export HISTSIZE=10000; setopt INC_APPEND_HISTORY SHARE_HISTORY
+  2. : 1776192373:0;clear
+  3. : 1776192373:0;cd "/Users/stefan/workspace/git-cmds"
+  4. : 1776192373:0;export HISTFILE=/Users/stefan/.dev4/dev4-0d0dd903_hist_0
+  5. : 1776192373:0;clear
+  6. : 1776192925:0;export HISTFILE=/Users/stefan/.dev4/dev4-0d0dd903_hist_0; export SAVEHIST=10000; export HISTSIZE=10000; setopt INC_APPEND_HISTORY SHARE_HISTORY
+  7. : 1776192925:0;clear
+  8. : 1776192925:0;cd "/Users/stefan/workspace/git-cmds"
+  9. : 1776192925:0;export HISTFILE=/Users/stefan/.dev4/dev4-0d0dd903_hist_0
+ 10. : 1776192925:0;clear
+
+Terminal 2 Command History
+  1. : 1776192373:0;export HISTFILE=/Users/stefan/.dev4/dev4-0d0dd903_hist_1; export SAVEHIST=10000; export HISTSIZE=10000; setopt INC_APPEND_HISTORY SHARE_HISTORY
+  2. : 1776192373:0;clear
+  3. : 1776192373:0;cd "/Users/stefan/workspace/git-cmds"
+  4. : 1776192373:0;export HISTFILE=/Users/stefan/.dev4/dev4-0d0dd903_hist_1
+  5. : 1776192373:0;clear
+  6. : 1776192925:0;export HISTFILE=/Users/stefan/.dev4/dev4-0d0dd903_hist_1; export SAVEHIST=10000; export HISTSIZE=10000; setopt INC_APPEND_HISTORY SHARE_HISTORY
+  7. : 1776192925:0;clear
+  8. : 1776192925:0;cd "/Users/stefan/workspace/git-cmds"
+  9. : 1776192925:0;export HISTFILE=/Users/stefan/.dev4/dev4-0d0dd903_hist_1
+ 10. : 1776192925:0;clear
+
+Terminal 3 Command History
+  1. : 1776192373:0;export HISTFILE=/Users/stefan/.dev4/dev4-0d0dd903_hist_2; export SAVEHIST=10000; export HISTSIZE=10000; setopt INC_APPEND_HISTORY SHARE_HISTORY
+  2. : 1776192373:0;clear
+  3. : 1776192373:0;cd "/Users/stefan/workspace/iantalabs/3aidesk/site"
+  4. : 1776192373:0;export HISTFILE=/Users/stefan/.dev4/dev4-0d0dd903_hist_2
+  5. : 1776192373:0;clear
+  6. : 1776192925:0;export HISTFILE=/Users/stefan/.dev4/dev4-0d0dd903_hist_2; export SAVEHIST=10000; export HISTSIZE=10000; setopt INC_APPEND_HISTORY SHARE_HISTORY
+  7. : 1776192925:0;clear
+  8. : 1776192925:0;cd "/Users/stefan/workspace/iantalabs/3aidesk/site"
+  9. : 1776192925:0;export HISTFILE=/Users/stefan/.dev4/dev4-0d0dd903_hist_2
+ 10. : 1776192925:0;clear
+
+Terminal 4 Command History
+  1. : 1776192373:0;export HISTFILE=/Users/stefan/.dev4/dev4-0d0dd903_hist_3; export SAVEHIST=10000; export HISTSIZE=10000; setopt INC_APPEND_HISTORY SHARE_HISTORY
+  2. : 1776192373:0;clear
+  3. : 1776192373:0;cd "/Users/stefan/workspace/iantalabs/3aidesk/editor-server"
+  4. : 1776192373:0;export HISTFILE=/Users/stefan/.dev4/dev4-0d0dd903_hist_3
+  5. : 1776192373:0;clear
+  6. : 1776192925:0;export HISTFILE=/Users/stefan/.dev4/dev4-0d0dd903_hist_3; export SAVEHIST=10000; export HISTSIZE=10000; setopt INC_APPEND_HISTORY SHARE_HISTORY
+  7. : 1776192925:0;clear
+  8. : 1776192925:0;cd "/Users/stefan/workspace/iantalabs/3aidesk/editor-server"
+  9. : 1776192925:0;export HISTFILE=/Users/stefan/.dev4/dev4-0d0dd903_hist_3
+ 10. : 1776192925:0;clear

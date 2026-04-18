@@ -20,6 +20,7 @@ alias tt88="ttyd -p 7688 -W zsh "   # run tty server with zsh on http://localhos
 alias nrd="npm run dev"
 alias nrb="npm run build"
 alias ni="npm install"
+alias nv="nvim"
 alias fd="firebase deploy"
 alias fv="fv.sh"            # File Viewer/browser on split panel
 alias green="echo -e '\e]11;#044\a'"  # set terminal bg to dark green
